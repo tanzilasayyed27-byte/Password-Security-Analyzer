@@ -1,0 +1,18 @@
+{
+    "project": "Advanced Password Security Analyzer",
+    "generated_at": "2026-09-07T21:10:48.206589",
+    "analysis": {
+        "password_length": 16,
+        "security_score": "6/6",
+        "strength": "STRONG",
+        "entropy_bits": 104.87,
+        "crack_resistance": "VERY HIGH"
+    },
+    "hashing": {
+        "algorithm": "SHA-256",
+        "sha256_hash": "73492d2904e8d4dd0f69669f4bd1353280290172b797d2b8be392b02629db1fb",
+        "salt": "c8984c7d72cb4f2e0a4aea6ee5efc3e6",
+        "salted_sha256": "f524ae76653b7d5be470f32989638c6762dbadd9948d3744319cb49216264c78"
+    },
+    "security_note": "This report was generated using a TEST password. No real credentials should be used."
+}

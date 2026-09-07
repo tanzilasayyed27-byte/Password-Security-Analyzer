@@ -1,0 +1,100 @@
+import hashlib
+import secrets
+import string
+
+
+def generate_hash(password, algorithm="sha256"):
+    """Generate a hash for educational comparison."""
+    if algorithm == "md5":
+        return hashlib.md5(password.encode()).hexdigest()
+    elif algorithm == "sha256":
+        return hashlib.sha256(password.encode()).hexdigest()
+    else:
+        raise ValueError("Unsupported algorithm")
+
+
+def generate_salt():
+    """Generate a random 16-byte salt."""
+    return secrets.token_hex(16)
+
+
+def generate_salted_hash(password, salt):
+    """Generate SHA-256 hash using a salt."""
+    return hashlib.sha256(
+        (salt + password).encode()
+    ).hexdigest()
+
+
+def check_password_strength(password):
+    """Basic password-strength analysis."""
+    score = 0
+    suggestions = []
+
+    if len(password) >= 12:
+        score += 1
+    else:
+        suggestions.append("Use at least 12 characters")
+
+    if any(c.isupper() for c in password):
+        score += 1
+    else:
+        suggestions.append("Add uppercase letters")
+
+    if any(c.islower() for c in password):
+        score += 1
+    else:
+        suggestions.append("Add lowercase letters")
+
+    if any(c.isdigit() for c in password):
+        score += 1
+    else:
+        suggestions.append("Add numbers")
+
+    if any(c in string.punctuation for c in password):
+        score += 1
+    else:
+        suggestions.append("Add special characters")
+
+    if score <= 2:
+        strength = "Weak"
+    elif score <= 4:
+        strength = "Moderate"
+    else:
+        strength = "Strong"
+
+    return strength, suggestions
+
+
+if __name__ == "__main__":
+    test_password = "CyberLab@2026"
+
+    print("=" * 50)
+    print("PASSWORD SECURITY ANALYZER")
+    print("=" * 50)
+
+    print("\nPassword:", test_password)
+
+    print("\nMD5 Hash:")
+    print(generate_hash(test_password, "md5"))
+
+    print("\nSHA-256 Hash:")
+    print(generate_hash(test_password, "sha256"))
+
+    salt = generate_salt()
+
+    print("\nGenerated Salt:")
+    print(salt)
+
+    print("\nSalted SHA-256 Hash:")
+    print(generate_salted_hash(test_password, salt))
+
+    strength, suggestions = check_password_strength(test_password)
+
+    print("\nPassword Strength:", strength)
+
+    if suggestions:
+        print("Suggestions:")
+        for suggestion in suggestions:
+            print("-", suggestion)
+    else:
+        print("No suggestions. Good password strength!")
